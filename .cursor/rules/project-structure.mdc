@@ -1,0 +1,23 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# プロジェクト構成ガイド
+
+このプロジェクトは Next.js（TypeScript）を用いたブログアプリのスターターです。主なディレクトリと役割は以下の通りです。
+
+- [src/app](mdc:src/app): アプリケーションのエントリーポイント。ページやレイアウト、グローバルスタイルを管理します。
+  - [src/app/_components](mdc:src/app/_components): UIコンポーネント群。記事表示やレイアウト用のパーツが含まれます。
+  - [src/app/posts](mdc:src/app/posts): 記事ページのルーティングを担当します。
+    - [src/app/posts/[slug]/page.tsx](mdc:src/app/posts/[slug]/page.tsx): 各記事の詳細ページ。
+- [src/interfaces](mdc:src/interfaces): TypeScriptの型定義ファイルを格納します。
+- [src/lib](mdc:src/lib): API呼び出しやMarkdown変換などのユーティリティ関数を管理します。
+- [_posts](mdc:_posts): Markdown形式の記事データを格納します。
+- [public/assets/blog](mdc:public/assets/blog): 記事ごとの画像や著者画像など静的アセットを管理します。
+  - [public/assets/blog/authors](mdc:public/assets/blog/authors): 著者画像を格納します。
+  - [public/assets/blog/hello-world](mdc:public/assets/blog/hello-world): 記事「hello-world」用の画像。
+  - [public/assets/blog/dynamic-routing](mdc:public/assets/blog/dynamic-routing): 記事「dynamic-routing」用の画像。
+  - [public/assets/blog/preview](mdc:public/assets/blog/preview): 記事「preview」用の画像。
+
+各ディレクトリの詳細やファイルの役割については、必要に応じて個別ルールを追加してください。
