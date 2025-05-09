@@ -3,6 +3,28 @@ import html from "remark-html";
 // @ts-ignore TODO: Add type definition for open-graph-scraper
 import ogs from 'open-graph-scraper';
 
+// OGP画像のURLを安全に取得するヘルパー関数
+function getImageUrl(ogImage: any): string {
+  if (!ogImage) return '';
+  
+  // 配列の場合は最初の要素を使用
+  if (Array.isArray(ogImage) && ogImage.length > 0 && ogImage[0]?.url) {
+    return ogImage[0].url;
+  }
+  
+  // オブジェクトの場合はurlプロパティを使用
+  if (typeof ogImage === 'object' && ogImage?.url) {
+    return ogImage.url;
+  }
+  
+  // 文字列の場合はそのまま返す（URLとして扱える場合）
+  if (typeof ogImage === 'string') {
+    return ogImage;
+  }
+  
+  return '';
+}
+
 export default async function markdownToHtml(markdown: string) {
   // まずは通常のremarkでMarkdownをHTMLに変換
   const result = await remark().use(html).process(markdown);
@@ -41,7 +63,7 @@ export default async function markdownToHtml(markdown: string) {
           if (ogpData && ogpData.ogTitle) {
             const cardHtml = `
               <div style="border: 1px solid #ddd; border-radius: 8px; margin: 16px 0; overflow: hidden; text-decoration: none; color: inherit; display: block;">
-                ${ogpData.ogImage ? `<img src="${ogpData.ogImage.url || ogpData.ogImage[0].url}" alt="${ogpData.ogTitle}" style="width: 100%; height: auto; max-height: 300px; object-fit: cover;">` : ''}
+                ${ogpData.ogImage ? `<img src="${getImageUrl(ogpData.ogImage)}" alt="${ogpData.ogTitle}" style="width: 100%; height: auto; max-height: 300px; object-fit: cover;">` : ''}
                 <div style="padding: 16px;">
                   <h3 style="margin-top: 0; margin-bottom: 8px; font-size: 1.2em;">${ogpData.ogTitle}</h3>
                   ${ogpData.ogDescription ? `<p style="margin-top: 0; margin-bottom: 8px; font-size: 0.9em; color: #555;">${ogpData.ogDescription}</p>` : ''}
